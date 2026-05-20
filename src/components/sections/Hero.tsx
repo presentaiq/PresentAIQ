@@ -55,7 +55,7 @@ export default function Hero() {
       aria-label="Hero"
     >
       {/* Sticky visual container — stays in viewport for 200vh of scroll */}
-      <div className="sticky top-0 h-screen overflow-hidden flex flex-col">
+      <div className="sticky top-0 h-screen overflow-hidden flex flex-col relative">
 
         {/* Background */}
         <div className="absolute inset-0 z-0">
@@ -86,10 +86,10 @@ export default function Hero() {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 flex flex-col flex-1 pt-24 pb-10 px-6 md:px-12 max-w-6xl mx-auto w-full">
+        <div className="relative z-10 flex flex-col flex-1 pt-14 pb-20 px-6 md:px-12 max-w-6xl mx-auto w-full">
 
           {/* Eyebrow */}
-          <div className="text-center mb-5 hero-text-content">
+          <div className="text-center mb-2 hero-text-content">
             <p
               ref={eyebrowRef}
               className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase"
@@ -105,7 +105,7 @@ export default function Hero() {
           <HeroSlides sectionRef={sectionRef} />
 
           {/* Headline + CTAs */}
-          <div className="hero-text-content text-center flex flex-col items-center mt-8">
+          <div className="hero-text-content text-center flex flex-col items-center mt-2">
             <h1
               ref={headRef}
               style={{
@@ -130,7 +130,7 @@ export default function Hero() {
 
             <p
               ref={subRef}
-              className="max-w-lg text-sm md:text-base leading-relaxed mb-7"
+              className="max-w-lg text-sm md:text-base leading-relaxed mb-4"
               style={{ color: 'var(--text-muted)', fontWeight: 300 }}
             >
               AI-assisted pitch decks, slide design, data visualization, think-cell charts,
