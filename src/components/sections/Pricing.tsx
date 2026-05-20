@@ -62,12 +62,6 @@ const plans = [
   },
 ];
 
-const oneTime = [
-  { label: 'Single Slide', price: 'from $35', note: 'Quick edits & additions' },
-  { label: 'Pitch Deck (10–15 slides)', price: 'from $399', note: 'Investor-grade design' },
-  { label: 'Corporate Collateral', price: 'from $199', note: 'One-pagers, brochures, case studies' },
-  { label: 'Full Presentation Refresh', price: 'from $699', note: 'Rebrand existing deck' },
-];
 
 function Check({ gold }: { gold?: boolean }) {
   return (
@@ -96,14 +90,6 @@ export default function Pricing() {
           opacity: 1, y: 0, filter: 'blur(0px)',
           duration: 1.1, ease: 'power3.out', stagger: 0.13,
           scrollTrigger: { trigger: '.pricing-grid', start: 'top 78%' },
-        }
-      );
-      gsap.fromTo('.onetime-row',
-        { opacity: 0, y: 20 },
-        {
-          opacity: 1, y: 0,
-          duration: 0.7, ease: 'power3.out', stagger: 0.09,
-          scrollTrigger: { trigger: '.onetime-grid', start: 'top 84%' },
         }
       );
     }, sectionRef);
@@ -228,38 +214,6 @@ export default function Pricing() {
               </a>
             </div>
           ))}
-        </div>
-
-        {/* One-time pricing */}
-        <div className="pt-12" style={{ borderTop: '1px solid var(--border)' }}>
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-2 text-center" style={{ color: 'var(--gold)' }}>
-            One-Time Projects
-          </p>
-          <p className="text-center text-sm mb-8" style={{ color: 'var(--text-muted)' }}>
-            No subscription needed for standalone work.
-          </p>
-          <div className="onetime-grid grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {oneTime.map((o) => (
-              <div
-                key={o.label}
-                className="onetime-row group flex flex-col p-5 rounded-2xl transition-all duration-300"
-                style={{
-                  background: 'rgba(13,24,41,0.7)',
-                  border: '1px solid var(--border)',
-                }}
-                onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(123,159,204,0.35)')}
-                onMouseLeave={e => (e.currentTarget.style.borderColor = 'var(--border)')}
-              >
-                <p className="text-xs uppercase tracking-[0.12em] mb-2" style={{ color: 'rgba(238,242,248,0.45)' }}>
-                  {o.label}
-                </p>
-                <p className="text-2xl font-bold mb-1.5" style={{ color: 'var(--text)', letterSpacing: '-0.03em', lineHeight: 1 }}>
-                  {o.price}
-                </p>
-                <p className="text-xs mt-auto pt-2" style={{ color: 'var(--text-muted)' }}>{o.note}</p>
-              </div>
-            ))}
-          </div>
         </div>
 
         <p className="text-center text-xs mt-10" style={{ color: 'rgba(238,242,248,0.28)' }}>
