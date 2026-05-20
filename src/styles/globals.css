@@ -193,24 +193,19 @@ p { color: var(--text-muted); }
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', sans-serif;
 }
 
-/* ─── Service card ─── */
-.service-card {
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 2.25rem 2rem;
-  background: var(--bg-1);
-  transition: border-color 0.4s var(--ease-cinematic), box-shadow 0.4s var(--ease-cinematic), transform 0.4s var(--ease-cinematic);
+/* ─── Service row (list layout) ─── */
+.svc-num {
+  color: rgba(123, 159, 204, 0.13);
+  transition: color 0.35s ease;
 }
-
-.service-card:hover {
-  border-color: rgba(123, 159, 204, 0.35);
-  box-shadow: 0 0 40px rgba(123, 159, 204, 0.06), 0 4px 24px rgba(0, 0, 0, 0.5);
-  transform: translateY(-3px);
+.svc-row:hover .svc-num {
+  color: rgba(123, 159, 204, 0.45);
 }
-
-.service-card.featured {
-  border-color: rgba(123, 159, 204, 0.5);
-  background: linear-gradient(145deg, rgba(123, 159, 204, 0.08), rgba(13, 24, 41, 0.9));
+.svc-row {
+  transition: background 0.3s ease;
+}
+.svc-row:hover {
+  background: rgba(123, 159, 204, 0.025);
 }
 
 /* ─── Quote ─── */

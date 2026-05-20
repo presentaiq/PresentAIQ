@@ -7,44 +7,44 @@ gsap.registerPlugin(ScrollTrigger);
 const services = [
   {
     icon: '◈',
-    title: 'Presentation Requests',
-    subtitle: 'Pitch Decks · Investor · Internal · Sales',
-    body: 'End-to-end slide design: from ideation to pixel-perfect PowerPoint. Investor-grade decks, sales enablement, and internal comms—all handled.',
+    title: 'Presentation Design',
+    tags: ['Pitch Decks', 'Investor', 'Sales', 'Internal'],
+    body: 'End-to-end slide craft — from blank brief to pixel-perfect PowerPoint. Investor-grade decks, sales enablement, and boardroom-ready presentations, all handled.',
     featured: true,
   },
   {
     icon: '◉',
     title: 'Social Media Creatives',
-    subtitle: 'LinkedIn · Instagram · Branded',
-    body: 'Scroll-stopping social graphics aligned with your brand identity. Built for engagement, optimized for each platform.',
+    tags: ['LinkedIn', 'Instagram', 'Branded'],
+    body: 'Scroll-stopping graphics aligned with your brand identity — built for engagement, optimised for every platform.',
     featured: false,
   },
   {
     icon: '◇',
     title: 'Corporate Collaterals',
-    subtitle: 'One-pagers · Brochures · Case Studies',
-    body: 'Print-ready and digital-first marketing materials that make prospects reach back. Every word placed, every space intentional.',
+    tags: ['One-pagers', 'Brochures', 'Case Studies'],
+    body: 'Print-ready and digital-first marketing materials that make prospects reach back. Every word placed. Every space intentional.',
     featured: false,
   },
   {
     icon: '◎',
     title: 'RFP / RFQ / RFI Support',
-    subtitle: 'Proposals · Bids · Government',
+    tags: ['Proposals', 'Bids', 'Government'],
     body: 'Win more bids. We design and format proposals that communicate your value instantly to evaluation committees.',
     featured: false,
   },
   {
     icon: '◐',
-    title: 'Excel Data & Dashboards',
-    subtitle: 'Formatting · Visualization · Think-Cell',
-    body: 'Transform raw data into executive-ready dashboards. Think-Cell charts, custom Excel models, and clean data visualizations.',
+    title: 'Data & Dashboard Design',
+    tags: ['Excel', 'Think-Cell', 'Visualization'],
+    body: 'Raw numbers into executive-ready dashboards. Think-Cell charts, custom Excel models, and data stories decision-makers actually read.',
     featured: false,
   },
   {
     icon: '◑',
-    title: 'PDF ↔ PPT / Doc Conversions',
-    subtitle: 'Format Migration · Rebuild',
-    body: 'Accurate, high-fidelity document conversions with maintained styling. No more copy-paste disasters.',
+    title: 'Document Conversion',
+    tags: ['PDF ↔ PPT', 'Rebuild', 'Migration'],
+    body: 'Accurate, high-fidelity format conversions with maintained styling and layout — no copy-paste disasters, no lost formatting.',
     featured: false,
   },
 ];
@@ -56,20 +56,33 @@ export default function Services() {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         '.services-head',
-        { opacity: 0, y: 30 },
+        { opacity: 0, y: 32 },
         {
           opacity: 1, y: 0, duration: 1.1, ease: 'power3.out',
           scrollTrigger: { trigger: '.services-head', start: 'top 82%' },
         }
       );
 
+      /* Rows wipe in from left, staggered */
       gsap.fromTo(
-        '.svc-card',
-        { opacity: 0, y: 40, filter: 'blur(4px)' },
+        '.svc-row',
+        { opacity: 0, x: -36 },
         {
-          opacity: 1, y: 0, filter: 'blur(0px)',
-          duration: 1, ease: 'power3.out', stagger: 0.1,
-          scrollTrigger: { trigger: '.services-grid', start: 'top 78%' },
+          opacity: 1, x: 0,
+          duration: 0.75, ease: 'power3.out', stagger: 0.09,
+          scrollTrigger: { trigger: '.services-list', start: 'top 80%' },
+        }
+      );
+
+      /* Left accent bars grow downward after rows appear */
+      gsap.fromTo(
+        '.svc-accent',
+        { scaleY: 0 },
+        {
+          scaleY: 1,
+          duration: 0.6, ease: 'power2.out', stagger: 0.09,
+          delay: 0.18,
+          scrollTrigger: { trigger: '.services-list', start: 'top 80%' },
         }
       );
     }, sectionRef);
@@ -85,51 +98,107 @@ export default function Services() {
       aria-label="Services"
     >
       <div className="max-w-6xl mx-auto px-6 md:px-12">
+
+        {/* Header */}
         <p className="text-xs uppercase tracking-[0.2em] text-[var(--gold)] mb-5 font-sans">
           Services
         </p>
-        <div className="services-head flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
-          <h2
-            className="font-serif"
-            style={{ fontSize: 'clamp(1.8rem, 4vw, 3.2rem)', lineHeight: 1.12, letterSpacing: '-0.02em' }}
-          >
-            Everything you need.<br />
-            <em className="not-italic text-[var(--gold)]">Nothing you don't.</em>
+        <div className="services-head flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+          <h2 className="text-display-sm">
+            The presentation studio<br />
+            <em className="not-italic" style={{ color: 'var(--gold)' }}>built for business.</em>
           </h2>
-          <p className="max-w-xs text-sm text-[var(--text-muted)] leading-relaxed">
-            A focused suite of services designed to cover every presentation and business document need.
+          <p className="max-w-xs text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+            Six services. Every format that shapes perception, wins bids, and moves decisions — under one roof.
           </p>
         </div>
 
-        <div className="services-grid grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {services.map((s) => (
+        {/* Numbered service list */}
+        <div className="services-list">
+          {services.map((s, i) => (
             <div
               key={s.title}
-              className={`svc-card service-card ${s.featured ? 'featured' : ''} flex flex-col gap-4`}
+              className="svc-row group relative"
+              style={{ borderTop: '1px solid var(--border)' }}
             >
-              {s.featured && (
-                <span className="text-2xs uppercase tracking-[0.16em] text-[var(--gold)] font-sans font-medium -mt-1">
-                  Most Requested
-                </span>
-              )}
-              <div className="text-[var(--gold)] text-2xl" aria-hidden="true">{s.icon}</div>
-              <div>
-                <h3 className="font-serif text-lg font-semibold text-[var(--text)] mb-1">
-                  {s.title}
-                </h3>
-                <p className="text-2xs uppercase tracking-[0.12em] text-[var(--gold)] opacity-70 font-sans mb-3">
-                  {s.subtitle}
-                </p>
-                <p className="text-sm text-[var(--text-muted)] leading-relaxed">{s.body}</p>
+              {/* Hover accent bar — grows from top on scroll, glows on hover */}
+              <div
+                className="svc-accent absolute left-0 top-3 bottom-3 w-px origin-top"
+                style={{ background: 'var(--gold)', opacity: 0.7 }}
+              />
+
+              <div className="grid grid-cols-[3.2rem_1fr] md:grid-cols-[4rem_1fr_auto] items-start gap-x-5 md:gap-x-8 gap-y-2 py-7 pl-4 md:pl-5">
+
+                {/* Index number */}
+                <div
+                  className="svc-num pt-0.5 select-none font-sans"
+                  style={{ fontSize: 'clamp(1.8rem,3.2vw,2.4rem)', fontWeight: 800, lineHeight: 1, letterSpacing: '-0.05em' }}
+                  aria-hidden="true"
+                >
+                  {String(i + 1).padStart(2, '0')}
+                </div>
+
+                {/* Main content */}
+                <div>
+                  <div className="flex flex-wrap items-center gap-2.5 mb-2.5">
+                    <span style={{ color: 'var(--gold)', fontSize: '1.1rem' }} aria-hidden="true">
+                      {s.icon}
+                    </span>
+                    <div className="flex flex-col">
+                      {s.featured && (
+                        <span
+                          className="text-2xs uppercase tracking-[0.16em] font-semibold font-sans mb-0.5"
+                          style={{ color: 'var(--gold)' }}
+                        >
+                          Most Requested
+                        </span>
+                      )}
+                      <h3 className="text-base font-semibold" style={{ color: 'var(--text)', letterSpacing: '-0.01em' }}>
+                        {s.title}
+                      </h3>
+                    </div>
+                  </div>
+
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)', maxWidth: '52ch' }}>
+                    {s.body}
+                  </p>
+
+                  {/* Tags — mobile only */}
+                  <div className="flex flex-wrap gap-1.5 mt-3 md:hidden">
+                    {s.tags.map(tag => (
+                      <span
+                        key={tag}
+                        className="text-2xs uppercase tracking-[0.1em] px-2.5 py-1 rounded-full"
+                        style={{ color: 'rgba(123,159,204,0.6)', background: 'rgba(123,159,204,0.07)', border: '1px solid rgba(123,159,204,0.14)' }}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Tags — desktop */}
+                <div className="hidden md:flex flex-col gap-2 items-end pt-0.5">
+                  {s.tags.map(tag => (
+                    <span
+                      key={tag}
+                      className="text-2xs uppercase tracking-[0.1em] px-2.5 py-1 rounded-full whitespace-nowrap"
+                      style={{ color: 'rgba(123,159,204,0.6)', background: 'rgba(123,159,204,0.07)', border: '1px solid rgba(123,159,204,0.14)' }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           ))}
+
+          {/* Closing rule */}
+          <div style={{ height: 1, background: 'var(--border)' }} />
         </div>
 
         <div className="mt-12 text-center">
-          <a href="#contact" className="btn-outline">
-            Discuss Your Project
-          </a>
+          <a href="#contact" className="btn-outline">Discuss Your Project</a>
         </div>
       </div>
     </section>
