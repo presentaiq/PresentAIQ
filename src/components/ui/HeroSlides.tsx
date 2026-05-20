@@ -252,7 +252,7 @@ export default function HeroSlides({ sectionRef }: Props) {
     <div
       ref={containerRef}
       className="relative w-full flex-shrink-0"
-      style={{ height: 'clamp(240px, 36vh, 380px)' }}
+      style={{ height: 'clamp(260px, 40vh, 440px)' }}
       aria-hidden="true"
     >
       {/* Perspective viewport */}

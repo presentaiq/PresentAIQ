@@ -86,10 +86,10 @@ export default function Hero() {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 flex flex-col flex-1 pt-14 pb-20 px-6 md:px-12 max-w-6xl mx-auto w-full">
+        <div className="relative z-10 flex flex-col flex-1 justify-between pt-14 pb-28 px-6 md:px-12 max-w-6xl mx-auto w-full">
 
           {/* Eyebrow */}
-          <div className="text-center mb-2 hero-text-content">
+          <div className="text-center hero-text-content">
             <p
               ref={eyebrowRef}
               className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase"
@@ -105,17 +105,16 @@ export default function Hero() {
           <HeroSlides sectionRef={sectionRef} />
 
           {/* Headline + CTAs */}
-          <div className="hero-text-content text-center flex flex-col items-center mt-2">
+          <div className="hero-text-content text-center flex flex-col items-center">
             <h1
               ref={headRef}
               style={{
-                fontSize: 'clamp(1.45rem, 2.5vw, 2.5rem)',
-                lineHeight: 1.12,
-                letterSpacing: '-0.022em',
+                fontSize: 'clamp(1.8rem, 3.6vw, 3rem)',
+                lineHeight: 1.08,
+                letterSpacing: '-0.026em',
                 fontWeight: 700,
                 color: 'var(--text)',
-                maxWidth: '44rem',
-                marginBottom: '1.1rem',
+                marginBottom: '0.7rem',
               }}
             >
               {/* Force exactly 2 lines with display:block spans */}
