@@ -174,9 +174,17 @@ export default function HeroSlides({ sectionRef }: Props) {
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
+    /*
+     * Two separate element sets to avoid property conflicts:
+     *   .slide-float  → only animated by the idle-float tweens  (y)
+     *   .hero-slide   → only animated by scroll explosion        (x, y, z, rotationX/Y/Z)
+     * Float uses translateY on the outer wrapper; scroll uses full
+     * 3-D transform on the inner div — they never touch the same property.
+     */
+    const floatEls = gsap.utils.toArray<HTMLElement>('.slide-float');
     const slideEls = gsap.utils.toArray<HTMLElement>('.hero-slide');
 
-    /* ── 1. Starting state: all stacked at origin ── */
+    /* ── 1. Starting state ── */
     gsap.set(slideEls, {
       opacity: 0, scale: 0.4,
       x: 0, y: 0, z: 0,
@@ -185,7 +193,7 @@ export default function HeroSlides({ sectionRef }: Props) {
     gsap.set(sceneRef.current, { opacity: 0 });
 
     const ctx = gsap.context(() => {
-      /* ── 2. Page-load entry: slides burst to resting positions ── */
+      /* ── 2. Page-load entry burst ── */
       gsap.to(sceneRef.current, { opacity: 1, duration: 0.5, delay: 0.6 });
 
       SLIDES.forEach((cfg, i) => {
@@ -199,67 +207,55 @@ export default function HeroSlides({ sectionRef }: Props) {
         });
       });
 
-      /* ── 3. Gentle idle float (starts after entry settles) ── */
-      const floatDelays = [0, 0.4, 0.7, 1.1, 0.9];
+      /* ── 3. Idle float — on WRAPPER elements, not slides ── */
       const floatAmounts = [-10, -7, -8, -5, -6];
       const floatDurations = [3.2, 3.8, 3.5, 4.1, 3.7];
-      SLIDES.forEach((_, i) => {
-        gsap.to(slideEls[i], {
-          y: `+=${floatAmounts[i]}`,
+      const floatDelays   = [2.8, 3.2, 3.5, 3.9, 3.7];
+      floatEls.forEach((el, i) => {
+        gsap.to(el, {
+          y: floatAmounts[i],
           duration: floatDurations[i],
           ease: 'sine.inOut',
           yoyo: true,
           repeat: -1,
-          delay: 2.8 + floatDelays[i],
+          delay: floatDelays[i],
         });
       });
 
-      /* ── 4. Scroll-driven EXPLOSION ── */
+      /* ── 4. Scroll-driven explosion ── */
       if (!sectionRef.current) return;
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top top',
-          end: 'bottom bottom',   // full 200vh section
-          scrub: 1.8,
+          end: 'bottom bottom',
+          scrub: 0.8,          // tight = responsive, no lag
+          fastScrollEnd: true,
         },
       });
 
-      /* Slide 0 (front): pushes toward viewer */
-      tl.to(slideEls[0], {
-        x: SLIDES[0].exploded.x, y: SLIDES[0].exploded.y, z: SLIDES[0].exploded.z,
-        rotationX: SLIDES[0].exploded.rotX, rotationY: SLIDES[0].exploded.rotY,
-        ease: 'none',
-      }, 0);
-
-      /* Slides 1-4: blast outward */
-      SLIDES.slice(1).forEach((cfg, i) => {
-        tl.to(slideEls[i + 1], {
-          x: cfg.exploded.x, y: cfg.exploded.y, z: cfg.exploded.z,
-          rotationX: cfg.exploded.rotX, rotationY: cfg.exploded.rotY, rotationZ: cfg.exploded.rotZ,
+      /* All slides explode to final positions */
+      SLIDES.forEach((cfg, i) => {
+        tl.to(slideEls[i], {
+          x: cfg.exploded.x,
+          y: cfg.exploded.y,
+          z: cfg.exploded.z,
+          rotationX: cfg.exploded.rotX,
+          rotationY: cfg.exploded.rotY,
+          rotationZ: cfg.exploded.rotZ,
           ease: 'none',
         }, 0);
       });
 
-      /* Scene: tilt forward as explosion progresses */
-      tl.to(sceneRef.current, {
-        rotationX: -30,
-        ease: 'none',
-      }, 0.05);
+      /* Scene tilts forward */
+      tl.to(sceneRef.current, { rotationX: -30, ease: 'none' }, 0.05);
 
-      /* Content text fades out mid-explosion */
-      tl.to('.hero-text-content', {
-        opacity: 0,
-        y: -50,
-        ease: 'none',
-      }, 0.45);
+      /* Text fades mid-scroll */
+      tl.to('.hero-text-content', { opacity: 0, y: -50, ease: 'none' }, 0.4);
 
-      /* Scene itself fades at end */
-      tl.to(sceneRef.current, {
-        opacity: 0,
-        ease: 'none',
-      }, 0.80);
+      /* Scene fades at the end */
+      tl.to(sceneRef.current, { opacity: 0, ease: 'none' }, 0.82);
 
     }, containerRef);
 
@@ -273,7 +269,6 @@ export default function HeroSlides({ sectionRef }: Props) {
       style={{ height: 'clamp(400px, 58vh, 600px)' }}
       aria-hidden="true"
     >
-      {/* perspective wrapper */}
       <div style={{ position: 'absolute', inset: 0, perspective: '1400px', perspectiveOrigin: '50% 42%' }}>
         <div
           ref={sceneRef}
@@ -285,9 +280,10 @@ export default function HeroSlides({ sectionRef }: Props) {
           }}
         >
           {SLIDES.map((cfg, i) => (
+            /* Outer wrapper: float animation only (y) */
             <div
               key={i}
-              className="hero-slide"
+              className="slide-float"
               style={{
                 position: 'absolute',
                 width: cfg.w,
@@ -295,11 +291,22 @@ export default function HeroSlides({ sectionRef }: Props) {
                 marginLeft: -cfg.w / 2,
                 marginTop: -cfg.h / 2,
                 transformStyle: 'preserve-3d',
-                filter: `drop-shadow(0 ${20 + i * 4}px ${50 + i * 10}px rgba(0,0,0,${0.6 - i * 0.05}))`,
-                willChange: 'transform, opacity',
+                willChange: 'transform',
               }}
             >
-              {cfg.content}
+              {/* Inner: scroll explosion (x, y, z, rotations) */}
+              <div
+                className="hero-slide"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  transformStyle: 'preserve-3d',
+                  filter: `drop-shadow(0 ${20 + i * 4}px ${50 + i * 10}px rgba(0,0,0,${0.6 - i * 0.05}))`,
+                  willChange: 'transform, opacity',
+                }}
+              >
+                {cfg.content}
+              </div>
             </div>
           ))}
         </div>

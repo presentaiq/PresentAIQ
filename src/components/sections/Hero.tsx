@@ -109,20 +109,23 @@ export default function Hero() {
             <h1
               ref={headRef}
               style={{
-                /* 20% smaller than text-display (clamp 2.6→5.2rem) */
                 fontSize: 'clamp(2.08rem, 4.4vw, 4.16rem)',
-                lineHeight: 1.07,
+                lineHeight: 1.1,
                 letterSpacing: '-0.026em',
                 fontWeight: 700,
                 color: 'var(--text)',
-                maxWidth: '42rem',
+                maxWidth: '44rem',
                 marginBottom: '1.1rem',
               }}
             >
-              Intelligent Design,{' '}
-              <span style={{ color: 'var(--gold)' }}>Executive Presentation,</span>
-              <br />
-              Delivered at Speed of Thought
+              {/* Force exactly 2 lines with display:block spans */}
+              <span style={{ display: 'block' }}>
+                Intelligent Design,{' '}
+                <span style={{ color: 'var(--gold)' }}>Executive Presentation,</span>
+              </span>
+              <span style={{ display: 'block' }}>
+                Delivered at Speed of Thought
+              </span>
             </h1>
 
             <p
