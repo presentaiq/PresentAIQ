@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,25 +6,34 @@
 
 /* ─── Design tokens ─── */
 :root {
-  --gold: #C9A84C;
-  --gold-light: #E0C06A;
-  --gold-dark: #9E7A2E;
-  --bg: #0E0E0E;
-  --bg-1: #141414;
-  --bg-2: #1A1A1A;
-  --text: #F2EDE5;
-  --text-muted: rgba(242, 237, 229, 0.55);
-  --border: rgba(201, 168, 76, 0.18);
+  /* Brand accent — periwinkle blue (from AIQ badge) */
+  --gold: #7B9FCC;
+  --gold-light: #9AB8D8;
+  --gold-dark: #4A6899;
+
+  /* Navy backgrounds */
+  --bg: #080F1C;
+  --bg-1: #0D1829;
+  --bg-2: #132038;
+  --bg-3: #1A2B4A;
+
+  /* Text */
+  --text: #EEF2F8;
+  --text-muted: rgba(238, 242, 248, 0.52);
+
+  /* Border */
+  --border: rgba(123, 159, 204, 0.16);
+
+  /* Easings */
   --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-apple: cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 /* ─── Base ─── */
-*, *::before, *::after {
-  box-sizing: border-box;
-}
+*, *::before, *::after { box-sizing: border-box; }
 
 html {
-  scroll-behavior: auto; /* Lenis handles scroll */
+  scroll-behavior: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -33,11 +42,10 @@ html {
 body {
   background-color: var(--bg);
   color: var(--text);
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Helvetica Neue', Arial, sans-serif;
   font-size: 1rem;
-  line-height: 1.7;
+  line-height: 1.65;
   overflow-x: hidden;
-  cursor: default;
 }
 
 /* ─── Scrollbar ─── */
@@ -47,11 +55,35 @@ body {
 
 /* ─── Typography ─── */
 h1, h2, h3, h4 {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', 'Helvetica Neue', sans-serif;
   color: var(--text);
+  font-weight: 700;
+  letter-spacing: -0.022em;
 }
 
 p { color: var(--text-muted); }
+
+/* ─── Display text scale ─── */
+.text-display {
+  font-size: clamp(2.6rem, 5.5vw, 5.2rem);
+  line-height: 1.06;
+  letter-spacing: -0.028em;
+  font-weight: 700;
+}
+
+.text-display-sm {
+  font-size: clamp(1.9rem, 3.8vw, 3.4rem);
+  line-height: 1.1;
+  letter-spacing: -0.022em;
+  font-weight: 700;
+}
+
+.text-headline {
+  font-size: clamp(1.2rem, 2.2vw, 1.75rem);
+  line-height: 1.25;
+  letter-spacing: -0.018em;
+  font-weight: 600;
+}
 
 /* ─── Grain overlay ─── */
 .grain-overlay {
@@ -59,199 +91,207 @@ p { color: var(--text-muted); }
   inset: 0;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.035;
+  opacity: 0.025;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-size: 200px 200px;
 }
 
-/* ─── Vignette ─── */
 .vignette {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 9998;
-  background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.55) 100%);
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(6, 12, 24, 0.65) 100%);
 }
 
-/* ─── Gold accent line ─── */
+/* ─── Accent line ─── */
 .gold-line {
   display: block;
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  opacity: 0.4;
+  opacity: 0.35;
 }
 
-/* ─── Section base ─── */
+/* ─── Scene / Section ─── */
 .scene {
   position: relative;
   padding-top: clamp(6rem, 12vh, 10rem);
   padding-bottom: clamp(6rem, 12vh, 10rem);
 }
 
-/* Ensure bg-1 sections bleed edge to edge */
-.scene.bg-\[var\(--bg-1\)\] {
-  margin-left: calc(-1 * var(--page-gutter, 0px));
-  margin-right: calc(-1 * var(--page-gutter, 0px));
-}
-
-/* ─── Reveal classes (starting state, GSAP sets to visible) ─── */
-.reveal {
-  opacity: 0;
-  transform: translateY(28px);
-  will-change: opacity, transform;
-}
-
-.reveal-blur {
-  opacity: 0;
-  filter: blur(6px);
-  transform: translateY(20px);
-  will-change: opacity, transform, filter;
-}
-
-/* ─── Hero clip / text mask ─── */
-.clip-text {
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* ─── Button variants ─── */
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.875rem 2.25rem;
-  background: var(--gold);
-  color: #0E0E0E;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  border: 1px solid var(--gold);
-  border-radius: 2px;
-  cursor: pointer;
-  transition: background 0.35s var(--ease-cinematic), color 0.35s var(--ease-cinematic), transform 0.25s var(--ease-cinematic), box-shadow 0.35s var(--ease-cinematic);
-}
-
-.btn-primary:hover {
-  background: var(--gold-light);
-  border-color: var(--gold-light);
-  transform: translateY(-1px);
-  box-shadow: 0 8px 32px rgba(201, 168, 76, 0.22);
-}
-
-.btn-outline {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.875rem 2.25rem;
-  background: transparent;
-  color: var(--text);
-  font-family: 'Inter', sans-serif;
-  font-size: 0.875rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  border: 1px solid rgba(242, 237, 229, 0.25);
-  border-radius: 2px;
-  cursor: pointer;
-  transition: border-color 0.35s var(--ease-cinematic), color 0.35s var(--ease-cinematic), transform 0.25s var(--ease-cinematic);
-}
-
-.btn-outline:hover {
-  border-color: var(--gold);
-  color: var(--gold);
-  transform: translateY(-1px);
-}
-
-/* ─── Focus states ─── */
-:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 3px;
-}
-
-/* ─── Number stat ─── */
-.stat-num {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(3rem, 8vw, 6.5rem);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.03em;
-  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dark) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* ─── Card ─── */
-.service-card {
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 2.5rem 2rem;
-  background: var(--bg-1);
-  transition: border-color 0.4s var(--ease-cinematic), box-shadow 0.4s var(--ease-cinematic), transform 0.4s var(--ease-cinematic);
-}
-
-.service-card:hover {
-  border-color: rgba(201, 168, 76, 0.4);
-  box-shadow: 0 0 48px rgba(201, 168, 76, 0.07), 0 2px 24px rgba(0,0,0,0.5);
-  transform: translateY(-3px);
-}
-
-.service-card.featured {
-  border-color: var(--gold);
-  background: linear-gradient(145deg, rgba(201, 168, 76, 0.06), rgba(14,14,14,0.8));
-}
-
-/* ─── Testimonial quote ─── */
-.quote-text {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(1.4rem, 3vw, 2.2rem);
-  font-style: italic;
-  line-height: 1.45;
-  color: var(--text);
-}
-
-/* ─── Process step ─── */
-.process-num {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 4rem;
-  font-weight: 700;
-  line-height: 1;
-  color: rgba(201, 168, 76, 0.12);
-  letter-spacing: -0.04em;
-}
-
-/* ─── Reduced motion ─── */
-@media (prefers-reduced-motion: reduce) {
-  .reveal, .reveal-blur {
-    opacity: 1 !important;
-    transform: none !important;
-    filter: none !important;
-  }
-  * {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* ─── Inter-section gradient bridges ─── */
 .scene + .scene::before {
   content: '';
   display: block;
   height: 1px;
   background: linear-gradient(90deg, transparent 0%, var(--border) 30%, var(--border) 70%, transparent 100%);
   margin-bottom: clamp(4rem, 8vh, 7rem);
-  opacity: 0.6;
+}
+
+/* ─── Buttons ─── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem 2.25rem;
+  background: var(--gold);
+  color: #060C18;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  border: none;
+  border-radius: 980px; /* Apple-style pill */
+  cursor: pointer;
+  transition: background 0.3s var(--ease-apple), transform 0.2s var(--ease-apple), box-shadow 0.3s var(--ease-apple);
+}
+
+.btn-primary:hover {
+  background: var(--gold-light);
+  transform: scale(1.02);
+  box-shadow: 0 8px 28px rgba(123, 159, 204, 0.3);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem 2.25rem;
+  background: rgba(123, 159, 204, 0.08);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  border: 1px solid rgba(123, 159, 204, 0.25);
+  border-radius: 980px;
+  cursor: pointer;
+  transition: background 0.3s var(--ease-apple), border-color 0.3s var(--ease-apple), transform 0.2s var(--ease-apple);
+}
+
+.btn-outline:hover {
+  background: rgba(123, 159, 204, 0.14);
+  border-color: rgba(123, 159, 204, 0.5);
+  transform: scale(1.02);
+}
+
+/* ─── Focus ─── */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* ─── Stat number ─── */
+.stat-num {
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 60%, var(--gold-dark) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', sans-serif;
+}
+
+/* ─── Service card ─── */
+.service-card {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2.25rem 2rem;
+  background: var(--bg-1);
+  transition: border-color 0.4s var(--ease-cinematic), box-shadow 0.4s var(--ease-cinematic), transform 0.4s var(--ease-cinematic);
+}
+
+.service-card:hover {
+  border-color: rgba(123, 159, 204, 0.35);
+  box-shadow: 0 0 40px rgba(123, 159, 204, 0.06), 0 4px 24px rgba(0, 0, 0, 0.5);
+  transform: translateY(-3px);
+}
+
+.service-card.featured {
+  border-color: rgba(123, 159, 204, 0.5);
+  background: linear-gradient(145deg, rgba(123, 159, 204, 0.08), rgba(13, 24, 41, 0.9));
+}
+
+/* ─── Quote ─── */
+.quote-text {
+  font-size: clamp(1.35rem, 2.8vw, 2.1rem);
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -0.012em;
+  color: var(--text);
+  font-style: italic;
+}
+
+/* ─── Process number ─── */
+.process-num {
+  font-size: 4.5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: rgba(123, 159, 204, 0.1);
+  letter-spacing: -0.04em;
+}
+
+/* ─── Pricing card ─── */
+.pricing-card {
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  background: var(--bg-1);
+  transition: border-color 0.4s var(--ease-cinematic), transform 0.4s var(--ease-cinematic), box-shadow 0.4s var(--ease-cinematic);
+}
+
+.pricing-card.featured {
+  border-color: var(--gold);
+  background: linear-gradient(160deg, rgba(123,159,204,0.1) 0%, rgba(13,24,41,0.95) 100%);
+  box-shadow: 0 0 60px rgba(123, 159, 204, 0.1);
+}
+
+.pricing-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+/* ─── Input ─── */
+.form-input {
+  width: 100%;
+  background: rgba(123, 159, 204, 0.04);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.875rem 1.25rem;
+  font-size: 0.9rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', sans-serif;
+  color: var(--text);
+  transition: border-color 0.25s var(--ease-apple), background 0.25s var(--ease-apple);
+}
+
+.form-input::placeholder { color: var(--text-muted); }
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--gold);
+  background: rgba(123, 159, 204, 0.07);
+}
+
+/* ─── Logo mark ─── */
+.logo-aiq-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px 3px 9px;
+  border-radius: 7px;
+  background: rgba(123, 159, 204, 0.22);
+  border: 1px solid rgba(123, 159, 204, 0.3);
+  line-height: 1;
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* ─── Utilities ─── */
-.text-gold { color: var(--gold); }
+.text-accent { color: var(--gold); }
 .text-muted { color: var(--text-muted); }
-.border-gold { border-color: var(--border); }
-
-/* ─── Smooth anchor scrolling ─── */
-html:not(.lenis-ready) {
-  scroll-behavior: smooth;
-}

@@ -29,8 +29,7 @@ export default function Contact() {
     setTimeout(() => setStatus('sent'), 1400);
   };
 
-  const inputCls =
-    'w-full bg-transparent border border-[var(--border)] rounded-sm px-5 py-3.5 text-sm text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--gold)] transition-colors duration-300 font-sans';
+  const inputCls = 'form-input';
 
   return (
     <section
@@ -46,7 +45,7 @@ export default function Contact() {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse 50% 60% at 50% 100%, rgba(201,168,76,0.05) 0%, transparent 65%)',
+          background: 'radial-gradient(ellipse 50% 60% at 50% 100%, rgba(123,159,204,0.06) 0%, transparent 65%)',
         }}
         aria-hidden="true"
       />
@@ -58,8 +57,7 @@ export default function Contact() {
             Let's Work Together
           </p>
           <h2
-            className="font-serif"
-            style={{ fontSize: 'clamp(2rem, 5vw, 4rem)', lineHeight: 1.1, letterSpacing: '-0.025em' }}
+            className="text-display-sm"
           >
             Get Your First Slide<br />
             <em className="not-italic text-[var(--gold)]">Free.</em>

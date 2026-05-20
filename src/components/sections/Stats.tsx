@@ -91,7 +91,7 @@ export default function Stats() {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse 70% 50% at 50% 50%, rgba(201,168,76,0.04) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse 70% 50% at 50% 50%, rgba(123,159,204,0.05) 0%, transparent 70%)',
         }}
         aria-hidden="true"
       />
@@ -101,8 +101,8 @@ export default function Stats() {
           Track Record
         </p>
         <h2
-          className="stats-headline font-serif mb-16 md:mb-20"
-          style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.8rem)', lineHeight: 1.18, letterSpacing: '-0.02em' }}
+          className="stats-headline text-display-sm mb-16 md:mb-20"
+          style={{ lineHeight: 1.18 }}
         >
           The numbers behind<br />
           <em className="not-italic text-[var(--gold)]">every great presentation.</em>

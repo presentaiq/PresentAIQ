@@ -78,7 +78,7 @@ export default function Testimonials() {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse 60% 60% at 50% 50%, rgba(201,168,76,0.03) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse 60% 60% at 50% 50%, rgba(123,159,204,0.04) 0%, transparent 70%)',
         }}
         aria-hidden="true"
       />

@@ -72,10 +72,7 @@ export default function Manifesto() {
         <p className="text-xs uppercase tracking-[0.2em] text-[var(--gold)] mb-5 font-sans">
           What We Do
         </p>
-        <h2
-          className="manifesto-headline font-serif mb-8"
-          style={{ fontSize: 'clamp(1.8rem, 4vw, 3.2rem)', lineHeight: 1.12, letterSpacing: '-0.02em' }}
-        >
+        <h2 className="manifesto-headline text-display-sm mb-8">
           We turn complex ideas into<br />
           <em className="not-italic text-[var(--gold)]">presentations that close deals.</em>
         </h2>
@@ -87,10 +84,10 @@ export default function Manifesto() {
       <div className="pillars-grid grid md:grid-cols-3 gap-6">
         {pillars.map((p) => (
           <div key={p.number} className="pillar-card service-card group">
-            <div className="text-[var(--gold)] font-serif text-4xl font-light mb-6 opacity-40 group-hover:opacity-70 transition-opacity duration-500">
+            <div className="text-[var(--gold)] text-4xl font-light mb-6 opacity-40 group-hover:opacity-70 transition-opacity duration-500">
               {p.number}
             </div>
-            <h3 className="font-serif text-xl font-semibold mb-4 text-[var(--text)]">
+            <h3 className="text-xl font-semibold mb-4 text-[var(--text)]">
               {p.title}
             </h3>
             <p className="text-sm text-[var(--text-muted)] leading-relaxed">

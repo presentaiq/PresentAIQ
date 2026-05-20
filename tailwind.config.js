@@ -4,33 +4,32 @@ export default {
   theme: {
     extend: {
       colors: {
-        gold: {
-          DEFAULT: '#C9A84C',
-          light: '#E0C06A',
-          dark: '#9E7A2E',
+        accent: {
+          DEFAULT: '#7B9FCC',
+          light: '#9AB8D8',
+          dark: '#4A6899',
         },
-        surface: {
-          DEFAULT: '#0E0E0E',
-          1: '#141414',
-          2: '#1A1A1A',
-          3: '#222222',
+        navy: {
+          950: '#060C18',
+          900: '#080F1C',
+          800: '#0D1829',
+          700: '#132038',
+          600: '#1A2B4A',
+          500: '#22386A',
         },
       },
       fontFamily: {
-        serif: ['"Playfair Display"', 'Georgia', 'serif'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"SF Pro Text"', 'Inter', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+        display: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', 'Inter', '"Helvetica Neue"', 'sans-serif'],
       },
-      fontSize: {
-        '2xs': '0.65rem',
-        display: ['clamp(2.5rem, 6vw, 5.5rem)', { lineHeight: '1.08', letterSpacing: '-0.02em' }],
-        'display-sm': ['clamp(1.8rem, 4vw, 3.5rem)', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
-        headline: ['clamp(1.25rem, 2.5vw, 2rem)', { lineHeight: '1.25', letterSpacing: '-0.01em' }],
-      },
-      spacing: {
-        scene: 'clamp(5rem, 10vh, 9rem)',
+      letterSpacing: {
+        tightest: '-0.04em',
+        tighter: '-0.03em',
+        apple: '-0.022em',
       },
       transitionTimingFunction: {
         cinematic: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        apple: 'cubic-bezier(0.25, 0.1, 0.25, 1)',
       },
     },
   },
