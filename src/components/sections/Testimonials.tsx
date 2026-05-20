@@ -94,7 +94,8 @@ export default function Testimonials() {
         >
           {/* Open quote */}
           <div
-            className="absolute -top-4 left-1/2 -translate-x-1/2 font-serif text-[12rem] leading-none text-[var(--gold)] opacity-[0.06] select-none pointer-events-none"
+            className="absolute -top-4 left-1/2 -translate-x-1/2 leading-none text-[var(--gold)] opacity-[0.06] select-none pointer-events-none"
+            style={{ fontSize: 'clamp(4rem, 18vw, 11rem)', fontFamily: 'Georgia, serif' }}
             aria-hidden="true"
           >
             "
@@ -110,7 +111,7 @@ export default function Testimonials() {
         </div>
 
         {/* Dots */}
-        <div className="flex items-center justify-center gap-3 mt-10" role="tablist" aria-label="Testimonial navigation">
+        <div className="flex items-center justify-center gap-1 mt-10" role="tablist" aria-label="Testimonial navigation">
           {quotes.map((_, i) => (
             <button
               key={i}
@@ -118,12 +119,14 @@ export default function Testimonials() {
               aria-selected={i === active}
               aria-label={`Testimonial ${i + 1}`}
               onClick={() => goTo(i)}
-              className={`rounded-full transition-all duration-400 ${
+              className="w-10 h-10 flex items-center justify-center"
+            >
+              <span className={`block rounded-full transition-all duration-300 ${
                 i === active
-                  ? 'w-8 h-1.5 bg-[var(--gold)]'
-                  : 'w-1.5 h-1.5 bg-[var(--border)] hover:bg-[var(--gold)] opacity-60'
-              }`}
-            />
+                  ? 'w-6 h-1.5 bg-[var(--gold)]'
+                  : 'w-2 h-2 bg-[var(--border)] hover:bg-[var(--gold)] opacity-60'
+              }`} />
+            </button>
           ))}
         </div>
       </div>

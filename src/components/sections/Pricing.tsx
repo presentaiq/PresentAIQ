@@ -143,13 +143,13 @@ export default function Pricing() {
                 background: 'linear-gradient(160deg, #132038 0%, #0D1829 100%)',
                 border: '1px solid rgba(123,159,204,0.4)',
                 borderRadius: 16,
-                padding: '28px 28px 26px',
+                padding: 'clamp(20px,4vw,28px)',
                 boxShadow: '0 0 60px rgba(123,159,204,0.1), 0 24px 60px rgba(0,0,0,0.5)',
               } : {
                 background: 'linear-gradient(160deg, #0D1829 0%, #080F1C 100%)',
                 border: '1px solid rgba(123,159,204,0.14)',
                 borderRadius: 16,
-                padding: '28px 28px 26px',
+                padding: 'clamp(20px,4vw,28px)',
               }}
             >
               {/* Featured accent bar */}
@@ -184,7 +184,7 @@ export default function Pricing() {
               <div className="flex items-baseline gap-1.5 mb-4">
                 <span
                   style={{
-                    fontSize: p.price === 'Custom' ? '2.6rem' : '3rem',
+                    fontSize: p.price === 'Custom' ? 'clamp(1.8rem,4vw,2.6rem)' : 'clamp(2rem,5vw,3rem)',
                     fontWeight: 800,
                     letterSpacing: '-0.04em',
                     lineHeight: 1,

@@ -86,7 +86,7 @@ export default function Hero() {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 flex flex-col flex-1 justify-between pt-14 pb-28 px-6 md:px-12 max-w-6xl mx-auto w-full">
+        <div className="relative z-10 flex flex-col flex-1 justify-between pt-14 pb-20 md:pb-28 px-6 md:px-12 max-w-6xl mx-auto w-full">
 
           {/* Eyebrow */}
           <div className="text-center hero-text-content">

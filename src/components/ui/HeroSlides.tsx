@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -150,6 +150,16 @@ export default function HeroSlides({ sectionRef }: Props) {
   /* posWrap centers the scene; sceneRef is animated by GSAP */
   const posWrapRef  = useRef<HTMLDivElement>(null);
   const sceneRef    = useRef<HTMLDivElement>(null);
+  const [sceneScale, setSceneScale] = useState(1);
+
+  /* Scale the entire 3D scene down on narrow viewports */
+  useEffect(() => {
+    const update = () =>
+      setSceneScale(Math.min(1, Math.max(0.38, window.innerWidth / 880)));
+    update();
+    window.addEventListener('resize', update, { passive: true });
+    return () => window.removeEventListener('resize', update);
+  }, []);
 
   useEffect(() => {
     if (!containerRef.current || !sceneRef.current) return;
@@ -274,7 +284,7 @@ export default function HeroSlides({ sectionRef }: Props) {
           style={{
             position: 'absolute',
             top: '50%', left: '50%',
-            transform: 'translate(-50%, -50%)',
+            transform: `translate(-50%, -50%) scale(${sceneScale})`,
           }}
         >
           <div
