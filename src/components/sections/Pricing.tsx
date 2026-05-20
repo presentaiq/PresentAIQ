@@ -8,8 +8,8 @@ const plans = [
   {
     name: 'Starter',
     price: '$299',
-    period: '/month',
-    description: 'Perfect for small teams and growing businesses with regular presentation needs.',
+    period: '/mo',
+    description: 'Perfect for small teams with regular presentation needs.',
     features: [
       'Up to 20 slides per month',
       '48-hour turnaround',
@@ -19,12 +19,13 @@ const plans = [
       'Basic data charts',
     ],
     cta: 'Get Started',
+    href: '#contact',
     featured: false,
   },
   {
     name: 'Growth',
     price: '$599',
-    period: '/month',
+    period: '/mo',
     description: 'For teams that present frequently — pitch decks, sales enablement, and board packs.',
     features: [
       'Up to 60 slides per month',
@@ -36,7 +37,8 @@ const plans = [
       'Priority support',
       'Brand template setup',
     ],
-    cta: 'Most Popular',
+    cta: 'Get Started',
+    href: '#contact',
     featured: true,
   },
   {
@@ -55,6 +57,7 @@ const plans = [
       'SLA-backed turnaround',
     ],
     cta: 'Contact Us',
+    href: '#contact',
     featured: false,
   },
 ];
@@ -66,11 +69,11 @@ const oneTime = [
   { label: 'Full Presentation Refresh', price: 'from $699', note: 'Rebrand existing deck' },
 ];
 
-function CheckIcon() {
+function Check({ gold }: { gold?: boolean }) {
   return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-      <circle cx="7" cy="7" r="7" fill="rgba(123,159,204,0.15)" />
-      <path d="M4 7l2 2 4-4" stroke="#7B9FCC" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style={{ flexShrink: 0, marginTop: 1 }}>
+      <circle cx="8" cy="8" r="8" fill={gold ? 'rgba(123,159,204,0.22)' : 'rgba(123,159,204,0.1)'} />
+      <path d="M5 8l2 2 4-4" stroke="#7B9FCC" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -88,19 +91,19 @@ export default function Pricing() {
         }
       );
       gsap.fromTo('.pricing-card',
-        { opacity: 0, y: 40, filter: 'blur(4px)' },
+        { opacity: 0, y: 44, filter: 'blur(5px)' },
         {
           opacity: 1, y: 0, filter: 'blur(0px)',
-          duration: 1, ease: 'power3.out', stagger: 0.14,
+          duration: 1.1, ease: 'power3.out', stagger: 0.13,
           scrollTrigger: { trigger: '.pricing-grid', start: 'top 78%' },
         }
       );
       gsap.fromTo('.onetime-row',
-        { opacity: 0, x: -20 },
+        { opacity: 0, y: 20 },
         {
-          opacity: 1, x: 0,
-          duration: 0.8, ease: 'power3.out', stagger: 0.1,
-          scrollTrigger: { trigger: '.onetime-grid', start: 'top 82%' },
+          opacity: 1, y: 0,
+          duration: 0.7, ease: 'power3.out', stagger: 0.09,
+          scrollTrigger: { trigger: '.onetime-grid', start: 'top 84%' },
         }
       );
     }, sectionRef);
@@ -115,59 +118,110 @@ export default function Pricing() {
       aria-label="Pricing"
     >
       <div className="max-w-6xl mx-auto px-6 md:px-12">
+
+        {/* Header */}
         <div className="pricing-head text-center mb-16">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[var(--gold)] mb-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: 'var(--gold)' }}>
             Simple Pricing
           </p>
           <h2 className="text-display-sm mb-5">
             Flexible plans.<br />
-            <span style={{ color: 'var(--gold)' }}>Predictable costs.</span>
+            <em className="not-italic" style={{ color: 'var(--gold)' }}>Predictable costs.</em>
           </h2>
-          <p className="max-w-md mx-auto text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-            No hidden fees, no per-slide surprises. Choose a plan that fits your cadence
-            or pick one-time project pricing.
+          <p className="max-w-sm mx-auto text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+            No hidden fees. Choose a monthly plan or pick one-time project pricing.
           </p>
         </div>
 
         {/* Plan cards */}
-        <div className="pricing-grid grid md:grid-cols-3 gap-5 mb-16">
+        <div className="pricing-grid grid md:grid-cols-3 gap-5 mb-16 items-stretch">
           {plans.map((p) => (
-            <div key={p.name} className={`pricing-card flex flex-col ${p.featured ? 'featured' : ''}`}>
+            <div
+              key={p.name}
+              className="pricing-card flex flex-col relative overflow-hidden"
+              style={p.featured ? {
+                background: 'linear-gradient(160deg, #132038 0%, #0D1829 100%)',
+                border: '1px solid rgba(123,159,204,0.4)',
+                borderRadius: 16,
+                padding: '28px 28px 26px',
+                boxShadow: '0 0 60px rgba(123,159,204,0.1), 0 24px 60px rgba(0,0,0,0.5)',
+              } : {
+                background: 'linear-gradient(160deg, #0D1829 0%, #080F1C 100%)',
+                border: '1px solid rgba(123,159,204,0.14)',
+                borderRadius: 16,
+                padding: '28px 28px 26px',
+              }}
+            >
+              {/* Featured accent bar */}
               {p.featured && (
-                <div className="mb-4">
-                  <span className="text-2xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full"
-                        style={{ background: 'rgba(123,159,204,0.15)', color: 'var(--gold)' }}>
+                <div style={{
+                  position: 'absolute', top: 0, left: 0, right: 0, height: 3,
+                  background: 'linear-gradient(90deg, #4A6899, #7B9FCC, #9AB8D8)',
+                }} />
+              )}
+
+              {/* Badge */}
+              {p.featured && (
+                <div className="mb-5">
+                  <span
+                    className="text-2xs font-semibold uppercase tracking-[0.16em] px-3 py-1.5 rounded-full"
+                    style={{ background: 'rgba(123,159,204,0.18)', color: 'var(--gold)', letterSpacing: '0.16em' }}
+                  >
                     Most Popular
                   </span>
                 </div>
               )}
-              <div className="mb-6">
-                <p className="text-xs font-semibold uppercase tracking-widest mb-2"
-                   style={{ color: p.featured ? 'var(--gold)' : 'var(--text-muted)' }}>
-                  {p.name}
-                </p>
-                <div className="flex items-end gap-1 mb-3">
-                  <span className="text-4xl font-bold tracking-tighter" style={{ color: 'var(--text)', letterSpacing: '-0.03em' }}>
-                    {p.price}
-                  </span>
-                  {p.period && (
-                    <span className="text-sm mb-1" style={{ color: 'var(--text-muted)' }}>{p.period}</span>
-                  )}
-                </div>
-                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>{p.description}</p>
+
+              {/* Plan name */}
+              <p
+                className="text-2xs font-semibold uppercase tracking-[0.18em] mb-3"
+                style={{ color: p.featured ? 'var(--gold)' : 'rgba(238,242,248,0.4)' }}
+              >
+                {p.name}
+              </p>
+
+              {/* Price */}
+              <div className="flex items-baseline gap-1.5 mb-4">
+                <span
+                  style={{
+                    fontSize: p.price === 'Custom' ? '2.6rem' : '3rem',
+                    fontWeight: 800,
+                    letterSpacing: '-0.04em',
+                    lineHeight: 1,
+                    color: 'var(--text)',
+                    fontFamily: 'system-ui',
+                  }}
+                >
+                  {p.price}
+                </span>
+                {p.period && (
+                  <span className="text-sm" style={{ color: 'var(--text-muted)' }}>{p.period}</span>
+                )}
               </div>
 
+              {/* Description */}
+              <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--text-muted)' }}>
+                {p.description}
+              </p>
+
+              {/* Divider */}
+              <div className="mb-6" style={{ height: 1, background: 'var(--border)' }} />
+
+              {/* Features */}
               <ul className="flex flex-col gap-3 flex-1 mb-8">
                 {p.features.map((f) => (
                   <li key={f} className="flex items-start gap-2.5">
-                    <CheckIcon />
-                    <span className="text-sm leading-snug" style={{ color: 'var(--text-muted)' }}>{f}</span>
+                    <Check gold={p.featured} />
+                    <span className="text-sm leading-snug" style={{ color: p.featured ? 'rgba(238,242,248,0.75)' : 'var(--text-muted)' }}>
+                      {f}
+                    </span>
                   </li>
                 ))}
               </ul>
 
+              {/* CTA */}
               <a
-                href="#contact"
+                href={p.href}
                 className={p.featured ? 'btn-primary justify-center text-center' : 'btn-outline justify-center text-center'}
               >
                 {p.cta}
@@ -177,24 +231,40 @@ export default function Pricing() {
         </div>
 
         {/* One-time pricing */}
-        <div className="border-t border-[var(--border)] pt-12">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[var(--gold)] mb-8 text-center">
+        <div className="pt-12" style={{ borderTop: '1px solid var(--border)' }}>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-2 text-center" style={{ color: 'var(--gold)' }}>
             One-Time Projects
+          </p>
+          <p className="text-center text-sm mb-8" style={{ color: 'var(--text-muted)' }}>
+            No subscription needed for standalone work.
           </p>
           <div className="onetime-grid grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {oneTime.map((o) => (
-              <div key={o.label} className="onetime-row p-5 rounded-2xl border border-[var(--border)] bg-[var(--bg-1)] hover:border-[rgba(123,159,204,0.35)] transition-colors duration-300">
-                <p className="text-sm font-semibold mb-1" style={{ color: 'var(--text)' }}>{o.label}</p>
-                <p className="text-lg font-bold mb-1" style={{ color: 'var(--gold)', letterSpacing: '-0.02em' }}>{o.price}</p>
-                <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{o.note}</p>
+              <div
+                key={o.label}
+                className="onetime-row group flex flex-col p-5 rounded-2xl transition-all duration-300"
+                style={{
+                  background: 'rgba(13,24,41,0.7)',
+                  border: '1px solid var(--border)',
+                }}
+                onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(123,159,204,0.35)')}
+                onMouseLeave={e => (e.currentTarget.style.borderColor = 'var(--border)')}
+              >
+                <p className="text-xs uppercase tracking-[0.12em] mb-2" style={{ color: 'rgba(238,242,248,0.45)' }}>
+                  {o.label}
+                </p>
+                <p className="text-2xl font-bold mb-1.5" style={{ color: 'var(--text)', letterSpacing: '-0.03em', lineHeight: 1 }}>
+                  {o.price}
+                </p>
+                <p className="text-xs mt-auto pt-2" style={{ color: 'var(--text-muted)' }}>{o.note}</p>
               </div>
             ))}
           </div>
         </div>
 
-        <p className="text-center text-xs mt-8" style={{ color: 'var(--text-muted)' }}>
-          All plans include unlimited file formats (PPTX, PDF, Google Slides). Prices in USD.{' '}
-          <a href="#contact" className="underline hover:text-[var(--gold)] transition-colors duration-200">
+        <p className="text-center text-xs mt-10" style={{ color: 'rgba(238,242,248,0.28)' }}>
+          All plans include PPTX, PDF & Google Slides formats.{' '}
+          <a href="#contact" className="underline decoration-[rgba(123,159,204,0.4)] hover:text-[var(--gold)] transition-colors duration-200">
             Custom quotes available.
           </a>
         </p>
