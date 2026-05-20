@@ -109,9 +109,9 @@ export default function Hero() {
             <h1
               ref={headRef}
               style={{
-                fontSize: 'clamp(2.08rem, 4.4vw, 4.16rem)',
-                lineHeight: 1.1,
-                letterSpacing: '-0.026em',
+                fontSize: 'clamp(1.45rem, 2.5vw, 2.5rem)',
+                lineHeight: 1.12,
+                letterSpacing: '-0.022em',
                 fontWeight: 700,
                 color: 'var(--text)',
                 maxWidth: '44rem',
