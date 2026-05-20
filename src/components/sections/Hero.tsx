@@ -86,10 +86,10 @@ export default function Hero() {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 flex flex-col flex-1 justify-between pt-14 pb-20 md:pb-28 px-6 md:px-12 max-w-6xl mx-auto w-full">
+        <div className="relative z-10 flex flex-col flex-1 pt-14 px-6 md:px-12 max-w-6xl mx-auto w-full">
 
           {/* Eyebrow */}
-          <div className="text-center hero-text-content">
+          <div className="shrink-0 text-center hero-text-content mb-3">
             <p
               ref={eyebrowRef}
               className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase"
@@ -101,30 +101,27 @@ export default function Hero() {
             </p>
           </div>
 
-          {/* 3D slides — takes the bulk of the viewport */}
-          <HeroSlides sectionRef={sectionRef} />
+          {/* 3D slides — fills remaining space */}
+          <div className="flex-1 min-h-0">
+            <HeroSlides sectionRef={sectionRef} />
+          </div>
 
           {/* Headline + CTAs */}
-          <div className="hero-text-content text-center flex flex-col items-center">
+          <div className="shrink-0 hero-text-content text-center flex flex-col items-center pb-20 md:pb-24">
             <h1
               ref={headRef}
               style={{
-                fontSize: 'clamp(1.8rem, 3.6vw, 3rem)',
-                lineHeight: 1.08,
+                fontSize: 'clamp(1.35rem, 3.6vw, 3rem)',
+                lineHeight: 1.1,
                 letterSpacing: '-0.026em',
                 fontWeight: 700,
                 color: 'var(--text)',
-                marginBottom: '0.7rem',
+                marginBottom: '0.65rem',
               }}
             >
-              {/* Force exactly 2 lines with display:block spans */}
-              <span style={{ display: 'block' }}>
-                Intelligent Design,{' '}
-                <span style={{ color: 'var(--gold)' }}>Executive Presentation,</span>
-              </span>
-              <span style={{ display: 'block' }}>
-                Delivered at Speed of Thought
-              </span>
+              <span style={{ display: 'block' }}>Intelligent Design,</span>
+              <span style={{ display: 'block', color: 'var(--gold)' }}>Executive Presentation,</span>
+              <span style={{ display: 'block' }}>Delivered at Speed of Thought</span>
             </h1>
 
             <p
@@ -138,7 +135,6 @@ export default function Hero() {
 
             <div ref={ctaRef} className="flex flex-col sm:flex-row items-center gap-3">
               <a href="#contact" className="btn-primary">Get Your First Slide Free</a>
-              <a href="#services" className="btn-outline">Explore Services</a>
             </div>
           </div>
         </div>
