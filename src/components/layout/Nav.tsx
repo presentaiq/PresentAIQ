@@ -3,7 +3,6 @@ import gsap from 'gsap';
 
 const links = [
   { label: 'Services', href: '#services' },
-  { label: 'Pricing', href: '#pricing' },
   { label: 'Process', href: '#process' },
   { label: 'Contact', href: '#contact' },
 ];
