@@ -7,23 +7,23 @@ gsap.registerPlugin(ScrollTrigger);
 const steps = [
   {
     num: '01',
-    title: 'Create',
-    body: 'You share your content, brief, or raw ideas. We absorb the brief, align on goals, and begin crafting the visual narrative.',
+    title: 'Client Brief',
+    body: 'Share your project brief, content, and goals. We align on format, audience, and timeline before a single slide is touched.',
   },
   {
     num: '02',
-    title: 'Post',
-    body: 'First draft delivered fast. We share via your preferred channel—Drive, Dropbox, or direct—fully editable and production-ready.',
+    title: 'Create',
+    body: 'We dive in — crafting layout, visual hierarchy, and narrative structure. Every element placed with purpose.',
   },
   {
     num: '03',
-    title: 'Analyze',
-    body: "We review feedback together. Every revision is purposeful, guided by data-informed design decisions and your audience's needs.",
+    title: 'First Draft',
+    body: 'A polished first draft delivered to your inbox via Drive or Dropbox — fully editable, production-ready, and on time.',
   },
   {
     num: '04',
-    title: 'Recommendations',
-    body: 'Beyond delivery: we provide strategic suggestions—tone adjustments, data clarity, narrative flow—so each iteration gets sharper.',
+    title: 'Final Draft',
+    body: 'Your feedback applied with precision. We refine until it\'s exactly right — sharp, cohesive, and ready to present.',
   },
 ];
 
@@ -89,8 +89,8 @@ export default function Process() {
         className="process-head font-serif mb-16"
         style={{ fontSize: 'clamp(1.8rem, 4vw, 3.2rem)', lineHeight: 1.12, letterSpacing: '-0.02em' }}
       >
-        Four steps to<br />
-        <em className="not-italic text-[var(--gold)]">presentation-ready.</em>
+        Brief to final,<br />
+        <em className="not-italic text-[var(--gold)]">in four steps.</em>
       </h2>
 
       {/* Progress line */}

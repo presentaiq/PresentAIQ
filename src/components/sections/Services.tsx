@@ -145,14 +145,6 @@ export default function Services() {
                       {s.icon}
                     </span>
                     <div className="flex flex-col">
-                      {s.featured && (
-                        <span
-                          className="text-2xs uppercase tracking-[0.16em] font-semibold font-sans mb-0.5"
-                          style={{ color: 'var(--gold)' }}
-                        >
-                          Most Requested
-                        </span>
-                      )}
                       <h3 className="text-base font-semibold" style={{ color: 'var(--text)', letterSpacing: '-0.01em' }}>
                         {s.title}
                       </h3>

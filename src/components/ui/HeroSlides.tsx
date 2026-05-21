@@ -181,8 +181,7 @@ export default function HeroSlides({ sectionRef }: Props) {
           trigger: sectionRef.current,
           start: 'top top',
           end: 'bottom bottom',
-          scrub: 1.5,
-          fastScrollEnd: true,
+          scrub: true,
           invalidateOnRefresh: true,
         },
       })
@@ -241,11 +240,10 @@ export default function HeroSlides({ sectionRef }: Props) {
           trigger: sectionRef.current,
           start: 'top top',
           end: 'bottom bottom',
-          scrub: 1.8,
-          fastScrollEnd: true,
+          scrub: true,
           invalidateOnRefresh: true,
-          onEnter:     () => ambient.pause(),
-          onLeaveBack: () => ambient.resume(),
+          onEnter:     () => gsap.to(ambient, { timeScale: 0, duration: 0.6, ease: 'power2.out' }),
+          onLeaveBack: () => gsap.to(ambient, { timeScale: 1, duration: 0.6, ease: 'power2.out' }),
         },
       });
 
