@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 
 const links = [
-  { label: 'Services', href: '#services' },
-  { label: 'Process', href: '#process' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'About Us',  href: '#manifesto'    },
+  { label: 'Services',  href: '#services'     },
+  { label: 'Portfolio', href: '#testimonials' },
+  { label: 'Contact',   href: '#contact'      },
 ];
 
 function Logo() {
