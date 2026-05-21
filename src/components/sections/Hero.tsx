@@ -8,7 +8,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const eyebrowRef = useRef<HTMLParagraphElement>(null);
   const headRef = useRef<HTMLHeadingElement>(null);
   const subRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
@@ -17,14 +16,9 @@ export default function Hero() {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ delay: 0.2 });
 
-      tl.fromTo(eyebrowRef.current,
-        { opacity: 0, y: 14 },
-        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }
-      )
-        .fromTo(headRef.current,
+      tl.fromTo(headRef.current,
           { opacity: 0, y: 32, filter: 'blur(6px)' },
-          { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.1, ease: 'power3.out' },
-          '-=0.4'
+          { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.1, ease: 'power3.out' }
         )
         .fromTo(subRef.current,
           { opacity: 0, y: 20 },
@@ -87,19 +81,6 @@ export default function Hero() {
 
         {/* Content */}
         <div className="relative z-10 flex flex-col flex-1 pt-14 px-6 md:px-12 max-w-6xl mx-auto w-full">
-
-          {/* Eyebrow */}
-          <div className="shrink-0 text-center hero-text-content mb-3">
-            <p
-              ref={eyebrowRef}
-              className="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase"
-              style={{ color: 'var(--text-muted)' }}
-            >
-              <span className="w-4 h-px opacity-60" style={{ background: 'var(--gold)' }} />
-              AI-Powered Presentation Excellence
-              <span className="w-4 h-px opacity-60" style={{ background: 'var(--gold)' }} />
-            </p>
-          </div>
 
           {/* 3D slides — fills remaining space */}
           <div className="flex-1 min-h-0">
