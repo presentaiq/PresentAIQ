@@ -4,7 +4,7 @@ import gsap from 'gsap';
 const links = [
   { label: 'About Us',  href: '#manifesto'    },
   { label: 'Services',  href: '#services'     },
-  { label: 'Portfolio', href: '#testimonials' },
+  { label: 'Portfolio', href: '#portfolio' },
   { label: 'Contact',   href: '#contact'      },
 ];
 

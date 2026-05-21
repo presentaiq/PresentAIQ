@@ -124,7 +124,7 @@ p { color: var(--text-muted); }
   display: block;
   height: 1px;
   background: linear-gradient(90deg, transparent 0%, var(--border) 30%, var(--border) 70%, transparent 100%);
-  margin-bottom: clamp(4rem, 8vh, 7rem);
+  margin-bottom: clamp(1.5rem, 3vh, 2.5rem);
 }
 
 /* ─── Buttons ─── */

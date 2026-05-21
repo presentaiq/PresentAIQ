@@ -38,9 +38,6 @@ export default function Contact() {
       className="scene relative overflow-hidden bg-[var(--bg-1)]"
       aria-label="Contact"
     >
-      {/* Top rule */}
-      <div className="gold-line max-w-6xl mx-auto mb-0" />
-
       {/* Subtle glow */}
       <div
         className="absolute inset-0 pointer-events-none"
