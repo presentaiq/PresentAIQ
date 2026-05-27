@@ -290,3 +290,13 @@ p { color: var(--text-muted); }
 /* ─── Utilities ─── */
 .text-accent { color: var(--gold); }
 .text-muted { color: var(--text-muted); }
+
+/* ─── Hero ticker ─── */
+@keyframes ticker-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes ticker-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
