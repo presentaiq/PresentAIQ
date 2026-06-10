@@ -4,63 +4,79 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const STATS = [
-  { value: 850, suffix: '+', label: 'Projects / Year', sub: 'Delivered on time, every time' },
-  { value: 200, suffix: '+', label: 'Global Clients', sub: 'Across 6 continents' },
-  { value: 10,  suffix: '+', label: 'Years of Expertise', sub: 'Deep presentation craft' },
-  { value: 98,  suffix: '%', label: 'Client Satisfaction', sub: 'Measured every quarter' },
+const stats = [
+  { value: 200, suffix: '+', label: 'Clients', detail: 'across industries worldwide' },
+  { value: 10, suffix: '+', label: 'Years', detail: 'of presentation expertise' },
+  { value: 850, suffix: '+', label: 'Projects / Year', detail: 'delivered on time, every time' },
 ];
 
-function CountUp({ value, suffix, trigger }: { value: number; suffix: string; trigger: Element | null }) {
+function CountUp({ value, suffix }: { value: number; suffix: string }) {
   const numRef = useRef<HTMLSpanElement>(null);
-  const done = useRef(false);
+  const triggered = useRef(false);
 
   useEffect(() => {
-    if (!numRef.current || !trigger) return;
+    if (!numRef.current) return;
     const el = numRef.current;
-    const st = ScrollTrigger.create({
-      trigger,
-      start: 'top 80%',
+
+    ScrollTrigger.create({
+      trigger: el,
+      start: 'top 85%',
       onEnter: () => {
-        if (done.current) return;
-        done.current = true;
-        const obj = { v: 0 };
-        gsap.to(obj, {
-          v: value,
-          duration: 2.2,
+        if (triggered.current) return;
+        triggered.current = true;
+        const counter = { val: 0 };
+        gsap.to(counter, {
+          val: value,
+          duration: 2,
           ease: 'power2.out',
-          onUpdate() { el.textContent = Math.round(obj.v) + suffix; },
+          onUpdate() {
+            el.textContent = Math.round(counter.val) + suffix;
+          },
         });
       },
     });
-    return () => st.kill();
-  }, [value, suffix, trigger]);
+  }, [value, suffix]);
 
-  return <span ref={numRef}>0{suffix}</span>;
+  return (
+    <span ref={numRef} className="stat-num">
+      0{suffix}
+    </span>
+  );
 }
 
 export default function Stats() {
   const sectionRef = useRef<HTMLElement>(null);
-  const statRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo('.stats-eyebrow',
-        { opacity: 0, y: 16 },
-        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
-          scrollTrigger: { trigger: '.stats-eyebrow', start: 'top 85%' } }
+      gsap.fromTo(
+        '.stats-headline',
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1, y: 0, duration: 1.1, ease: 'power3.out',
+          scrollTrigger: { trigger: '.stats-headline', start: 'top 82%' },
+        }
       );
-      gsap.fromTo('.stats-headline',
-        { opacity: 0, y: 28 },
-        { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out',
-          scrollTrigger: { trigger: '.stats-headline', start: 'top 82%' } }
+
+      gsap.fromTo(
+        '.stat-item',
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1, y: 0, duration: 1, ease: 'power3.out', stagger: 0.2,
+          scrollTrigger: { trigger: '.stats-grid', start: 'top 80%' },
+        }
       );
-      gsap.fromTo('.stat-card',
-        { opacity: 0, y: 32 },
-        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', stagger: 0.12,
-          scrollTrigger: { trigger: '.stats-grid', start: 'top 78%' } }
+
+      gsap.fromTo(
+        '.stat-line',
+        { scaleX: 0 },
+        {
+          scaleX: 1, duration: 1.4, ease: 'power3.out', stagger: 0.2,
+          scrollTrigger: { trigger: '.stats-grid', start: 'top 78%' },
+        }
       );
     }, sectionRef);
+
     return () => ctx.revert();
   }, []);
 
@@ -68,103 +84,51 @@ export default function Stats() {
     <section
       id="stats"
       ref={sectionRef}
-      style={{
-        background: 'var(--panel-dark)',
-        padding: 'clamp(5rem, 10vw, 8rem) 0',
-        position: 'relative',
-        overflow: 'hidden',
-      }}
+      className="scene relative overflow-hidden"
       aria-label="Proof points"
     >
-      {/* Radial accent */}
-      <div style={{
-        position: 'absolute', inset: 0, pointerEvents: 'none',
-        background: 'radial-gradient(ellipse 60% 50% at 50% 100%, rgba(37,99,235,0.12) 0%, transparent 70%)',
-      }} aria-hidden="true" />
+      {/* Background accent */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse 70% 50% at 50% 50%, rgba(123,159,204,0.05) 0%, transparent 70%)',
+        }}
+        aria-hidden="true"
+      />
 
-      <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16 relative z-10">
-        <div className="stats-eyebrow" style={{ marginBottom: 12 }}>
-          <span style={{
-            fontSize: '0.6875rem', fontWeight: 600, color: 'var(--accent)',
-            letterSpacing: '0.1em', textTransform: 'uppercase',
-          }}>
-            Track Record
-          </span>
-        </div>
+      <div className="max-w-6xl mx-auto px-6 md:px-12 relative z-10">
+        <p className="text-xs uppercase tracking-[0.2em] text-[var(--gold)] mb-5 font-sans">
+          Track Record
+        </p>
         <h2
-          className="stats-headline"
-          style={{
-            fontSize: 'clamp(1.75rem, 3.5vw, 2.75rem)',
-            fontWeight: 800, letterSpacing: '-0.032em', lineHeight: 1.15,
-            color: '#F1F5F9', marginBottom: 'clamp(3rem, 6vw, 5rem)',
-            maxWidth: '22ch',
-          }}
+          className="stats-headline text-display-sm mb-16 md:mb-20"
+          style={{ lineHeight: 1.18 }}
         >
-          Numbers that speak before we do.
+          The numbers behind<br />
+          <em className="not-italic text-[var(--gold)]">every great presentation.</em>
         </h2>
 
-        <div className="stats-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 1 }}>
-          {STATS.map((s, i) => (
-            <div
-              key={s.label}
-              ref={el => { statRefs.current[i] = el; }}
-              className="stat-card"
-              style={{
-                padding: 'clamp(1.75rem, 3vw, 2.5rem)',
-                border: '1px solid rgba(241,245,249,0.06)',
-                borderRadius: 2,
-                position: 'relative',
-              }}
-            >
-              <div style={{
-                position: 'absolute', top: 0, left: 0, right: 0, height: 2,
-                background: i === 0 ? 'linear-gradient(90deg, #2563EB, #7C3AED)' : 'transparent',
-                borderRadius: '2px 2px 0 0',
-              }} />
-              <div style={{
-                fontSize: 'clamp(2.5rem, 4vw, 3.5rem)',
-                fontWeight: 900, letterSpacing: '-0.045em', lineHeight: 1,
-                color: '#F1F5F9', marginBottom: 10,
-              }}>
-                <CountUp value={s.value} suffix={s.suffix} trigger={statRefs.current[i]} />
-              </div>
-              <div style={{ fontSize: '0.9375rem', fontWeight: 700, color: '#F1F5F9', marginBottom: 5 }}>
-                {s.label}
-              </div>
-              <div style={{ fontSize: '0.8125rem', color: 'rgba(241,245,249,0.45)', lineHeight: 1.5 }}>
-                {s.sub}
+        <div className="stats-grid grid md:grid-cols-3 gap-0 divide-y md:divide-y-0 md:divide-x divide-[var(--border)]">
+          {stats.map((s, i) => (
+            <div key={i} className="stat-item px-0 md:px-12 py-10 md:py-0 first:pl-0 last:pr-0">
+              <div
+                className="stat-line w-12 h-px bg-[var(--gold)] mb-8 origin-left opacity-50"
+                style={{ transformOrigin: 'left center' }}
+              />
+              <CountUp value={s.value} suffix={s.suffix} />
+              <div className="mt-3">
+                <p className="font-serif text-xl text-[var(--text)] mb-1">{s.label}</p>
+                <p className="text-xs text-[var(--text-muted)] tracking-wide">{s.detail}</p>
               </div>
             </div>
           ))}
         </div>
 
-        <div style={{
-          marginTop: 'clamp(2.5rem, 5vw, 4rem)',
-          padding: '1.5rem',
-          border: '1px solid rgba(241,245,249,0.06)',
-          borderRadius: 2,
-          display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 16,
-        }}>
-          <p style={{ fontSize: '0.9375rem', color: 'rgba(241,245,249,0.55)', maxWidth: '55ch', lineHeight: 1.6 }}>
-            Trusted by startups, Fortune 500s, and investment firms —
-            <span style={{ color: '#F1F5F9', fontWeight: 600 }}> PresentAIQ delivers results, not just slides.</span>
+        <div className="mt-16 md:mt-20 pt-10 border-t border-[var(--border)]">
+          <p className="text-sm text-[var(--text-muted)] max-w-lg">
+            Trusted by startups, Fortune 500s, and investment firms across six continents—
+            <span className="text-[var(--text)]"> PresentAIQ delivers results, not just slides.</span>
           </p>
-          <a href="#contact" style={{
-            display: 'inline-flex', alignItems: 'center', gap: 8,
-            padding: '0.625rem 1.25rem',
-            border: '1px solid rgba(241,245,249,0.15)', borderRadius: 8,
-            fontSize: '0.875rem', fontWeight: 600, color: '#F1F5F9',
-            textDecoration: 'none', whiteSpace: 'nowrap',
-            transition: 'border-color 0.2s, background 0.2s',
-          }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(37,99,235,0.6)'; e.currentTarget.style.background = 'rgba(37,99,235,0.08)'; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(241,245,249,0.15)'; e.currentTarget.style.background = 'transparent'; }}
-          >
-            Start a project
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </a>
         </div>
       </div>
     </section>
