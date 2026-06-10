@@ -373,7 +373,6 @@ const ROW3 = [
 ];
 
 export default function HeroTicker() {
-  const BG = '#080F1C';
   return (
     <>
       {/* Ticker rows */}
@@ -382,11 +381,11 @@ export default function HeroTicker() {
         <TickerRow cards={ROW2} dir="right" speed="40s" />
         <TickerRow cards={ROW3} dir="left"  speed="26s" />
       </div>
-      {/* Edge fades */}
-      <div style={{ position:'absolute',top:0,left:0,right:0,height:'24%',background:`linear-gradient(180deg,${BG},transparent)`,zIndex:2,pointerEvents:'none' }} />
-      <div style={{ position:'absolute',bottom:0,left:0,right:0,height:'24%',background:`linear-gradient(0deg,${BG},transparent)`,zIndex:2,pointerEvents:'none' }} />
-      <div style={{ position:'absolute',top:0,left:0,bottom:0,width:'10%',background:`linear-gradient(90deg,${BG},transparent)`,zIndex:2,pointerEvents:'none' }} />
-      <div style={{ position:'absolute',top:0,right:0,bottom:0,width:'10%',background:`linear-gradient(270deg,${BG},transparent)`,zIndex:2,pointerEvents:'none' }} />
+      {/* Edge fades — use CSS class so they respect light/dark theme */}
+      <div className="ticker-fade-top"    style={{ position:'absolute',top:0,left:0,right:0,height:'24%',zIndex:2,pointerEvents:'none' }} />
+      <div className="ticker-fade-bottom" style={{ position:'absolute',bottom:0,left:0,right:0,height:'24%',zIndex:2,pointerEvents:'none' }} />
+      <div className="ticker-fade-left"   style={{ position:'absolute',top:0,left:0,bottom:0,width:'10%',zIndex:2,pointerEvents:'none' }} />
+      <div className="ticker-fade-right"  style={{ position:'absolute',top:0,right:0,bottom:0,width:'10%',zIndex:2,pointerEvents:'none' }} />
     </>
   );
 }

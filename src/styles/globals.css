@@ -6,7 +6,7 @@
 
 /* ─── Design tokens ─── */
 :root {
-  /* Brand accent — periwinkle blue (from AIQ badge) */
+  /* Brand accent — periwinkle blue */
   --gold: #7B9FCC;
   --gold-light: #9AB8D8;
   --gold-dark: #4A6899;
@@ -24,10 +24,37 @@
   /* Border */
   --border: rgba(123, 159, 204, 0.16);
 
+  /* Nav / menu */
+  --nav-bg: rgba(8, 15, 28, 0.92);
+  --menu-bg: rgba(6, 12, 24, 0.97);
+
   /* Easings */
   --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-apple: cubic-bezier(0.25, 0.1, 0.25, 1);
 }
+
+/* ─── Light mode overrides ─── */
+html.light {
+  --gold: #2E5182;
+  --gold-light: #3D6499;
+  --gold-dark: #1E3F6A;
+
+  --bg: #F4F6FB;
+  --bg-1: #EAEFF8;
+  --bg-2: #DFE6F2;
+  --bg-3: #D3DCEC;
+
+  --text: #0D1829;
+  --text-muted: rgba(13, 24, 41, 0.52);
+
+  --border: rgba(13, 24, 41, 0.1);
+
+  --nav-bg: rgba(244, 246, 251, 0.92);
+  --menu-bg: rgba(248, 250, 254, 0.98);
+}
+
+html.light .grain-overlay { opacity: 0.012; }
+html.light .vignette      { opacity: 0.25; }
 
 /* ─── Base ─── */
 *, *::before, *::after { box-sizing: border-box; }
@@ -290,6 +317,34 @@ p { color: var(--text-muted); }
 /* ─── Utilities ─── */
 .text-accent { color: var(--gold); }
 .text-muted { color: var(--text-muted); }
+
+/* ─── Hero background & overlay ─── */
+.hero-bg {
+  background:
+    radial-gradient(ellipse 70% 55% at 20% 35%, rgba(123,159,204,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 70% at 80% 65%, rgba(26,43,74,0.55)    0%, transparent 55%),
+    linear-gradient(180deg, #060C18 0%, #080F1C 60%, #0D1829 100%);
+}
+.hero-overlay {
+  background: radial-gradient(ellipse 72% 88% at 50% 50%,
+    rgba(6,12,24,0.93) 18%, rgba(6,12,24,0.52) 55%, transparent 100%);
+}
+html.light .hero-bg {
+  background:
+    radial-gradient(ellipse 70% 55% at 20% 35%, rgba(61,100,153,0.1) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 70% at 80% 65%, rgba(61,100,153,0.05) 0%, transparent 55%),
+    linear-gradient(180deg, #E6ECF7 0%, #F4F6FB 60%, #EBF0F8 100%);
+}
+html.light .hero-overlay {
+  background: radial-gradient(ellipse 72% 88% at 50% 50%,
+    rgba(244,246,251,0.93) 18%, rgba(244,246,251,0.52) 55%, transparent 100%);
+}
+
+/* ─── Ticker edge fades ─── */
+.ticker-fade-top    { background: linear-gradient(180deg,  var(--bg), transparent); }
+.ticker-fade-bottom { background: linear-gradient(0deg,    var(--bg), transparent); }
+.ticker-fade-left   { background: linear-gradient(90deg,   var(--bg), transparent); }
+.ticker-fade-right  { background: linear-gradient(270deg,  var(--bg), transparent); }
 
 /* ─── Hero ticker ─── */
 @keyframes ticker-left {

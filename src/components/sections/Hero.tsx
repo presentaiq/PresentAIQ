@@ -40,16 +40,7 @@ export default function Hero() {
     >
       {/* Background */}
       <div className="absolute inset-0 z-0">
-        <div
-          className="absolute inset-0"
-          style={{
-            background: `
-              radial-gradient(ellipse 70% 55% at 20% 35%, rgba(123,159,204,0.08) 0%, transparent 60%),
-              radial-gradient(ellipse 50% 70% at 80% 65%, rgba(26,43,74,0.55) 0%, transparent 55%),
-              linear-gradient(180deg, #060C18 0%, #080F1C 60%, #0D1829 100%)
-            `,
-          }}
-        />
+        <div className="hero-bg absolute inset-0" />
       </div>
 
       {/* Infinite ticker rows + edge fades */}
@@ -57,12 +48,7 @@ export default function Hero() {
 
       {/* Frosted text overlay */}
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-6 pointer-events-none">
-        <div
-          className="absolute inset-0"
-          style={{
-            background: 'radial-gradient(ellipse 72% 88% at 50% 50%, rgba(6,12,24,0.93) 18%, rgba(6,12,24,0.52) 55%, transparent 100%)',
-          }}
-        />
+        <div className="hero-overlay absolute inset-0" />
         <div className="relative pointer-events-auto">
           <h1
             ref={headRef}
