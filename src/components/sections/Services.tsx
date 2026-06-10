@@ -4,48 +4,54 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const services = [
+const SERVICES = [
   {
-    icon: '◈',
+    num: '01',
     title: 'Presentation Design',
-    tags: ['Pitch Decks', 'Investor', 'Sales', 'Internal'],
-    body: 'End-to-end slide craft — from blank brief to pixel-perfect PowerPoint. Investor-grade decks, sales enablement, and boardroom-ready presentations, all handled.',
+    tags: ['Pitch Decks', 'Investor', 'Sales', 'Boardroom'],
+    body: 'End-to-end slide craft from blank brief to pixel-perfect PowerPoint. Investor-grade decks, sales enablement, and boardroom-ready presentations — all handled.',
     featured: true,
+    accent: '#2563EB',
   },
   {
-    icon: '◉',
+    num: '02',
     title: 'Social Media Creatives',
     tags: ['LinkedIn', 'Instagram', 'Branded'],
     body: 'Scroll-stopping graphics aligned with your brand identity — built for engagement, optimised for every platform.',
     featured: false,
+    accent: '#7C3AED',
   },
   {
-    icon: '◇',
+    num: '03',
     title: 'Corporate Collaterals',
     tags: ['One-pagers', 'Brochures', 'Case Studies'],
     body: 'Print-ready and digital-first marketing materials that make prospects reach back. Every word placed. Every space intentional.',
     featured: false,
+    accent: '#0EA5E9',
   },
   {
-    icon: '◎',
+    num: '04',
     title: 'RFP / RFQ / RFI Support',
     tags: ['Proposals', 'Bids', 'Government'],
     body: 'Win more bids. We design and format proposals that communicate your value instantly to evaluation committees.',
     featured: false,
+    accent: '#2563EB',
   },
   {
-    icon: '◐',
+    num: '05',
     title: 'Data & Dashboard Design',
     tags: ['Excel', 'Think-Cell', 'Visualization'],
     body: 'Raw numbers into executive-ready dashboards. Think-Cell charts, custom Excel models, and data stories decision-makers actually read.',
     featured: false,
+    accent: '#7C3AED',
   },
   {
-    icon: '◑',
+    num: '06',
     title: 'Document Conversion',
     tags: ['PDF ↔ PPT', 'Rebuild', 'Migration'],
     body: 'Accurate, high-fidelity format conversions with maintained styling and layout — no copy-paste disasters, no lost formatting.',
     featured: false,
+    accent: '#0EA5E9',
   },
 ];
 
@@ -54,39 +60,17 @@ export default function Services() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '.services-head',
+      gsap.fromTo('.svc-header',
         { opacity: 0, y: 32 },
-        {
-          opacity: 1, y: 0, duration: 1.1, ease: 'power3.out',
-          scrollTrigger: { trigger: '.services-head', start: 'top 82%' },
-        }
+        { opacity: 1, y: 0, duration: 1.1, ease: 'power3.out',
+          scrollTrigger: { trigger: '.svc-header', start: 'top 82%' } }
       );
-
-      /* Rows wipe in from left, staggered */
-      gsap.fromTo(
-        '.svc-row',
-        { opacity: 0, x: -36 },
-        {
-          opacity: 1, x: 0,
-          duration: 0.75, ease: 'power3.out', stagger: 0.09,
-          scrollTrigger: { trigger: '.services-list', start: 'top 80%' },
-        }
-      );
-
-      /* Left accent bars grow downward after rows appear */
-      gsap.fromTo(
-        '.svc-accent',
-        { scaleY: 0 },
-        {
-          scaleY: 1,
-          duration: 0.6, ease: 'power2.out', stagger: 0.09,
-          delay: 0.18,
-          scrollTrigger: { trigger: '.services-list', start: 'top 80%' },
-        }
+      gsap.fromTo('.svc-card',
+        { opacity: 0, y: 36 },
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out', stagger: 0.08,
+          scrollTrigger: { trigger: '.svc-grid', start: 'top 78%' } }
       );
     }, sectionRef);
-
     return () => ctx.revert();
   }, []);
 
@@ -94,103 +78,133 @@ export default function Services() {
     <section
       id="services"
       ref={sectionRef}
-      className="scene bg-[var(--bg-1)]"
+      style={{
+        background: 'var(--bg)',
+        padding: 'clamp(5rem, 10vw, 8rem) 0',
+      }}
       aria-label="Services"
     >
-      <div className="max-w-6xl mx-auto px-6 md:px-12">
+      <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
 
-        {/* Header */}
-        <p className="text-xs uppercase tracking-[0.2em] text-[var(--gold)] mb-5 font-sans">
-          Services
-        </p>
-        <div className="services-head flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
-          <h2 className="text-display-sm">
-            The presentation studio<br />
-            <em className="not-italic" style={{ color: 'var(--gold)' }}>built for business.</em>
-          </h2>
-          <p className="max-w-xs text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-            Six services. Every format that shapes perception, wins bids, and moves decisions — under one roof.
-          </p>
+        <div className="svc-header" style={{ marginBottom: 'clamp(3rem, 6vw, 5rem)' }}>
+          <span style={{
+            display: 'inline-block', fontSize: '0.6875rem', fontWeight: 600,
+            color: 'var(--accent)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 16,
+          }}>
+            Services
+          </span>
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', gap: 24 }}>
+            <h2 style={{
+              fontSize: 'clamp(1.75rem, 3.5vw, 3rem)',
+              fontWeight: 800, letterSpacing: '-0.032em', lineHeight: 1.12,
+              color: 'var(--text)',
+            }}>
+              The presentation studio<br />
+              <span style={{ color: 'var(--accent)' }}>built for business.</span>
+            </h2>
+            <p style={{
+              fontSize: '0.9375rem', color: 'var(--text-muted)', lineHeight: 1.65,
+              maxWidth: '38ch',
+            }}>
+              Six services. Every format that shapes perception, wins bids, and moves decisions — under one roof.
+            </p>
+          </div>
         </div>
 
-        {/* Numbered service list */}
-        <div className="services-list">
-          {services.map((s, i) => (
+        <div className="svc-grid" style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 340px), 1fr))',
+          gap: 1,
+          border: '1px solid var(--border)',
+          borderRadius: 16,
+          overflow: 'hidden',
+        }}>
+          {SERVICES.map((s) => (
             <div
-              key={s.title}
-              className="svc-row group relative"
-              style={{ borderTop: '1px solid var(--border)' }}
+              key={s.num}
+              className="svc-card group"
+              style={{
+                background: 'var(--surface)',
+                padding: 'clamp(1.75rem, 3vw, 2.5rem)',
+                position: 'relative',
+                cursor: 'default',
+                transition: 'background 0.25s',
+                borderRight: '1px solid var(--border)',
+                borderBottom: '1px solid var(--border)',
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'var(--surface-2)'; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'var(--surface)'; }}
             >
-              {/* Hover accent bar — grows from top on scroll, glows on hover */}
-              <div
-                className="svc-accent absolute left-0 top-3 bottom-3 w-px origin-top"
-                style={{ background: 'var(--gold)', opacity: 0.7 }}
+              {/* Top accent line */}
+              <div style={{
+                position: 'absolute', top: 0, left: 0, right: 0, height: 3,
+                background: s.featured
+                  ? `linear-gradient(90deg, ${s.accent}, #7C3AED)`
+                  : 'transparent',
+                opacity: 0, transition: 'opacity 0.25s',
+              }}
+                className="svc-accent-line"
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = '1'; }}
               />
 
-              <div className="grid grid-cols-[3.2rem_1fr] md:grid-cols-[4rem_1fr_auto] items-start gap-x-5 md:gap-x-8 gap-y-2 py-7 pl-4 md:pl-5">
-
-                {/* Index number */}
-                <div
-                  className="svc-num pt-0.5 select-none font-sans"
-                  style={{ fontSize: 'clamp(1.8rem,3.2vw,2.4rem)', fontWeight: 800, lineHeight: 1, letterSpacing: '-0.05em' }}
-                  aria-hidden="true"
-                >
-                  {String(i + 1).padStart(2, '0')}
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
+                <span style={{
+                  fontSize: 'clamp(2rem, 3vw, 2.75rem)',
+                  fontWeight: 900, letterSpacing: '-0.05em', lineHeight: 1,
+                  color: 'var(--border)', userSelect: 'none',
+                }}>
+                  {s.num}
+                </span>
+                <div style={{
+                  width: 32, height: 32, borderRadius: '50%',
+                  background: `${s.accent}14`,
+                  border: `1px solid ${s.accent}30`,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  flexShrink: 0,
+                }}>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={s.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
                 </div>
+              </div>
 
-                {/* Main content */}
-                <div>
-                  <div className="flex flex-wrap items-center gap-2.5 mb-2.5">
-                    <span style={{ color: 'var(--gold)', fontSize: '1.1rem' }} aria-hidden="true">
-                      {s.icon}
-                    </span>
-                    <div className="flex flex-col">
-                      <h3 className="text-base font-semibold" style={{ color: 'var(--text)', letterSpacing: '-0.01em' }}>
-                        {s.title}
-                      </h3>
-                    </div>
-                  </div>
+              <h3 style={{
+                fontSize: '1.0625rem', fontWeight: 700,
+                color: 'var(--text)', letterSpacing: '-0.015em',
+                marginBottom: 10, lineHeight: 1.3,
+              }}>
+                {s.title}
+              </h3>
 
-                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)', maxWidth: '52ch' }}>
-                    {s.body}
-                  </p>
+              <p style={{
+                fontSize: '0.875rem', color: 'var(--text-muted)',
+                lineHeight: 1.65, marginBottom: 20,
+              }}>
+                {s.body}
+              </p>
 
-                  {/* Tags — mobile only */}
-                  <div className="flex flex-wrap gap-1.5 mt-3 md:hidden">
-                    {s.tags.map(tag => (
-                      <span
-                        key={tag}
-                        className="text-2xs uppercase tracking-[0.1em] px-2.5 py-1 rounded-full"
-                        style={{ color: 'rgba(123,159,204,0.6)', background: 'rgba(123,159,204,0.07)', border: '1px solid rgba(123,159,204,0.14)' }}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Tags — desktop */}
-                <div className="hidden md:flex flex-col gap-2 items-end pt-0.5">
-                  {s.tags.map(tag => (
-                    <span
-                      key={tag}
-                      className="text-2xs uppercase tracking-[0.1em] px-2.5 py-1 rounded-full whitespace-nowrap"
-                      style={{ color: 'rgba(123,159,204,0.6)', background: 'rgba(123,159,204,0.07)', border: '1px solid rgba(123,159,204,0.14)' }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                {s.tags.map(tag => (
+                  <span key={tag} style={{
+                    fontSize: '0.6875rem', fontWeight: 600,
+                    letterSpacing: '0.04em',
+                    color: 'var(--text-muted)',
+                    background: 'var(--surface-2)',
+                    border: '1px solid var(--border)',
+                    borderRadius: 4, padding: '3px 8px',
+                  }}>
+                    {tag}
+                  </span>
+                ))}
               </div>
             </div>
           ))}
-
-          {/* Closing rule */}
-          <div style={{ height: 1, background: 'var(--border)' }} />
         </div>
 
-        <div className="mt-12 text-center">
-          <a href="#contact" className="btn-outline">Discuss Your Project</a>
+        <div style={{ marginTop: 40, textAlign: 'center' }}>
+          <a href="#contact" className="btn-outline">
+            Discuss Your Project
+          </a>
         </div>
       </div>
     </section>

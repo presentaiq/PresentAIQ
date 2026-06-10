@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
-import GrainOverlay from './components/ui/GrainOverlay';
 import Nav from './components/layout/Nav';
+import Footer from './components/layout/Footer';
 import Hero from './components/sections/Hero';
 import Manifesto from './components/sections/Manifesto';
 import Stats from './components/sections/Stats';
 import Services from './components/sections/Services';
+import Transform from './components/sections/Transform';
 import Process from './components/sections/Process';
 import Portfolio from './components/sections/Portfolio';
 import Testimonials from './components/sections/Testimonials';
@@ -19,18 +20,19 @@ export default function App() {
 
   return (
     <>
-      <GrainOverlay />
       <Nav />
       <main id="main-content">
         <Hero />
-        <Manifesto />
         <Stats />
+        <Manifesto />
         <Services />
+        <Transform />
         <Process />
         <Portfolio />
         <Testimonials />
         <Contact />
       </main>
+      <Footer />
     </>
   );
 }
